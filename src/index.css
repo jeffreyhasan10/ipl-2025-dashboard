@@ -1,0 +1,182 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700;800&family=Oswald:wght@400;500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
+    --radius: 0.75rem;
+  }
+
+  * {
+    @apply border-border selection:bg-white/10 selection:text-white;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased font-sans overflow-x-hidden;
+    background-image: linear-gradient(
+        to bottom,
+        rgba(17, 17, 17, 0.9),
+        rgba(17, 17, 17, 0.95)
+      ),
+      url("/stadium-bg.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-heading tracking-wide;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-white/5 backdrop-blur-lg border border-white/10 rounded-xl;
+  }
+
+  .card-glass {
+    @apply bg-white/10 backdrop-blur-md border border-white/10 rounded-xl transition-all duration-300 hover:bg-white/15;
+  }
+
+  .neon-border {
+    @apply relative after:absolute after:inset-0 after:rounded-xl after:p-[1px] after:bg-gradient-to-r after:from-blue-500 after:to-purple-500 after:opacity-70 after:-z-10;
+  }
+
+  .neon-text {
+    @apply text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 drop-shadow-[0_0_15px_rgba(147,51,234,0.5)];
+  }
+
+  .cta-button {
+    @apply relative overflow-hidden bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 active:scale-95;
+  }
+
+  .cta-button::after {
+    content: "";
+    @apply absolute inset-0 rounded-full opacity-0 transition-opacity duration-300 bg-white/20;
+  }
+
+  .cta-button:hover::after {
+    @apply opacity-100;
+  }
+
+  .secondary-button {
+    @apply glass border border-white/20 px-6 py-2 rounded-full hover:bg-white/10 transition-all duration-300;
+  }
+
+  .section-container {
+    @apply container mx-auto px-4 sm:px-6 lg:px-8 py-20;
+  }
+
+  .section-title {
+    @apply text-4xl md:text-5xl lg:text-6xl font-bold mb-8 text-center;
+  }
+
+  .section-subtitle {
+    @apply text-lg md:text-xl text-center text-gray-300 max-w-3xl mx-auto mb-16;
+  }
+}
+
+/* Custom animations */
+.hover-scale {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+.hover-lift {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+}
+
+/* 3D Card Flip Effect */
+.card-3d {
+  perspective: 1000px;
+}
+.card-3d {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.card-inner {
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+.card-3d:hover .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.card-back {
+  transform: rotateY(180deg);
+}
+
+/* Pill Tag */
+.pill-tag {
+  @apply inline-flex items-center px-3 py-0.5 rounded-full text-xs font-medium bg-white/10 border border-white/20;
+}
+
+/* Live indicator animation */
+.live-indicator {
+  @apply inline-flex items-center gap-1.5 bg-red-600/20 text-red-400 px-2.5 rounded-full text-xs font-medium;
+}
+
+.live-indicator::before {
+  content: "";
+  @apply h-2 w-2 rounded-full bg-red-600;
+  animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
